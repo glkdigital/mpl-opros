@@ -1,4 +1,8 @@
 import asyncio
+import os
+import json
+import gspread
+
 from datetime import datetime
 from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message
@@ -7,12 +11,11 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.memory import MemoryStorage
 from gspread import service_account
+from google.oauth2.service_account import Credentials
 from aiogram.client.default import DefaultBotProperties
 
 # === CONFIG ===
 BOT_TOKEN = "8194076815:AAE8YNo9DNnQGk_E9wUcyU14YgHyF0xIHPo"
-GOOGLE_CREDENTIALS_FILE = "google-api.json"
-SPREADSHEET_NAME = "mpl_ap"
 
 # === SETUP ===
 bot = Bot(
@@ -22,8 +25,19 @@ bot = Bot(
 dp = Dispatcher(storage=MemoryStorage())
 
 # === GOOGLE SHEETS ===
-gc = service_account(filename=GOOGLE_CREDENTIALS_FILE)
-sheet = gc.open(SPREADSHEET_NAME).worksheet("leads")  # Указываем правильный лист
+# Загружаем ключ из переменной окружения
+creds_json = os.getenv("GOOGLE_CREDS")  # GOOGLE_CREDS — переменная на Render
+creds_dict = json.loads(creds_json)
+
+# Настраиваем авторизацию
+scopes = ["https://www.googleapis.com/auth/spreadsheets"]
+credentials = Credentials.from_service_account_info(creds_dict, scopes=scopes)
+
+# Авторизация в gspread
+gc = gspread.authorize(credentials)
+
+# Подключение к Google Таблице и листу
+sheet = gc.open("mpl_ap").worksheet("leads")
 
 # === STATES ===
 class LeadForm(StatesGroup):
