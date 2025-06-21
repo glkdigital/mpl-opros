@@ -28,6 +28,7 @@ dp = Dispatcher(storage=MemoryStorage())
 # Загружаем ключ из переменной окружения
 creds_json = os.getenv("GOOGLE_CREDS")  # GOOGLE_CREDS — переменная на Render
 creds_dict = json.loads(creds_json)
+creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
 
 # Настраиваем авторизацию
 scopes = ["https://www.googleapis.com/auth/spreadsheets"]
