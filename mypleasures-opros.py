@@ -13,6 +13,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from gspread import service_account
 from google.oauth2.service_account import Credentials
 from aiogram.client.default import DefaultBotProperties
+from keep_alive import keep_alive
 
 keep_alive() 
 
