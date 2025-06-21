@@ -14,9 +14,6 @@ from gspread import service_account
 from google.oauth2.service_account import Credentials
 from aiogram.client.default import DefaultBotProperties
 
-port = int(os.environ.get("PORT", 10000))  # получаем PORT, заданный Render'ом
-
-app.run(host="0.0.0.0", port=port)
 
 # === CONFIG ===
 BOT_TOKEN = "8194076815:AAE8YNo9DNnQGk_E9wUcyU14YgHyF0xIHPo"
