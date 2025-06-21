@@ -14,6 +14,7 @@ from gspread import service_account
 from google.oauth2.service_account import Credentials
 from aiogram.client.default import DefaultBotProperties
 
+keep_alive() 
 
 # === CONFIG ===
 BOT_TOKEN = "8194076815:AAE8YNo9DNnQGk_E9wUcyU14YgHyF0xIHPo"
